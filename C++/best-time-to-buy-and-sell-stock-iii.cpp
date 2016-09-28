@@ -1,6 +1,41 @@
 // Time:  O(n)
 // Space: O(1)
 
+
+// More intuitive DP solution, forward and backward propagation
+class Solution {
+public:
+    /**
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+    int maxProfit(vector<int> &prices) {
+        // write your code here
+        if (prices.size() == 0) {
+            return 0;
+        }
+        vector<int> left(prices.size(), 0);
+        vector<int> right(prices.size() ,0);
+        int minPrice, maxPrice;
+        minPrice = prices[0];
+        for (int i = 1; i < prices.size(); i++) {
+            left[i] = max(left[i - 1], prices[i] - minPrice);
+            minPrice = min(minPrice, prices[i]);
+        }
+        maxPrice = prices.back();
+        for (int i = prices.size() - 2; i >= 0; i--) {
+            right[i] = max(right[i + 1], maxPrice - prices[i]);
+            maxPrice = max(maxPrice, prices[i]);
+        }
+        int profit = INT_MIN;
+        for (int i = 0; i < left.size(); i++) {
+            if (left[i] + right[i] > profit) {
+                profit = left[i] + right[i] ;
+            }
+        }
+        return profit;
+    }
+};
 // DP Solution
 class Solution {
 public:
