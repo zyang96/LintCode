@@ -1,6 +1,23 @@
 // Time:  O(n)
 // Space: O(1)
 
+
+
+// greedy solution
+int maxProfit(vector<int> &prices) {
+    // write your code here
+    if (prices.size() == 0) {
+        return 0;
+    }
+    int profit(0);
+    for (int i = 0;i < prices.size() - 1; i++) {
+        if (prices[i] < prices[i + 1]) {
+            profit += prices[i + 1] - prices[i];
+        }
+    }
+    return profit;
+}
+	
 // DP Solution
 class Solution {
 public:
