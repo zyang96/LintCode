@@ -13,6 +13,51 @@
  *     }
  * }
  */
+
+//my solution with stack implementation space O(N)
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: The head of linked list.
+     */
+    ListNode *insertionSortList(ListNode *head) {
+        // write your code here
+        if (head == NULL || head->next == NULL) {
+            return head;
+        }
+        stack<ListNode *> stk;
+        ListNode * curr = head->next;
+        while (curr != NULL) {
+            stk.push(head);
+            int tempVal = curr->val;
+            while (stk.top()->next != curr) {
+                stk.push(stk.top()->next);
+            }
+            while (!stk.empty()) {
+                if (stk.top()->val > tempVal) {
+                    stk.top()->next->val = stk.top()->val;
+                    stk.pop();
+                } else {
+                    stk.top()->next->val = tempVal;
+                    break;
+                }
+            }
+            if (!stk.empty()) {
+                while (!stk.empty()) {
+                    stk.pop();
+                }
+            } else {
+                head->val = tempVal;
+            }
+            curr = curr->next;
+        }
+        return head;
+    }
+};
+
+
+
 class Solution {
 public:
     /**
